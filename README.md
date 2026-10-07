@@ -1,83 +1,94 @@
 # pdf-to-html-deck
 
-把一本 PDF 书籍/手册/长报告,变成**按章节、图文并茂、带动画的单文件 HTML 演示站点**——零依赖输出,可直接部署到 GitHub Pages。
+**English** | [简体中文](README.zh-CN.md)
 
-> 🎉 **在线 Demo**:用本工具从一本 599 页的技术书生成的 [67 页「夜航图」演示](https://rcliang.github.io/agent-book/)(五套主题中的默认款,含 13 页代码讲解页;← → 翻页,`T` 看目录)。
+[![npm](https://img.shields.io/npm/v/pdf-to-html-deck?color=cb3837&label=npm%20version)](https://www.npmjs.com/package/pdf-to-html-deck)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
+[![Node >=18](https://img.shields.io/badge/node-%3E%3D18-339933)](https://nodejs.org)
+[![CI](https://github.com/RCliang/pdf-to-html-deck/actions/workflows/ci.yml/badge.svg)](https://github.com/RCliang/pdf-to-html-deck/actions/workflows/ci.yml)
+[![Live Demo](https://img.shields.io/badge/live%20demo-%E5%A4%9C%E8%88%AA%E5%9B%BE%E6%BC%94%E7%A4%BA-0E1930)](https://rcliang.github.io/agent-book/)
+
+Turn a PDF book, handbook, or long report into a **chapter-by-chapter, diagram-rich, animated, single-file HTML slide deck** — zero-dependency output, deployable to GitHub Pages in one push.
+
+> 🎉 **Live demo**: a [67-page "Night Chart" deck](https://rcliang.github.io/agent-book/) generated from a 599-page technical book — the default theme, including 13 code-walkthrough slides. Navigate with ← →, press `T` for the table of contents.
+
+<!-- TODO(record hero GIF, save as docs/demo.gif, then uncomment):
+<p align="center"><img src="docs/demo.gif" width="800" alt="pdf-to-html-deck in action"></p>
+-->
+
+## Quick start
 
 ```bash
-npx pdf-to-html-deck init                     # 在当前目录搭起项目骨架(work/ + 外壳 + 规范)
-npx pdf-to-html-deck extract book.pdf         # 按书签把 PDF 拆成「每章一个文本文件」
-# ……用你(或你的 AI 助手)按 work/SPEC.md 写 work/fragments/*.html 页面片段
-npx pdf-to-html-deck build --theme chalkboard # 组装成单文件 index.html(五套主题可选)
-npx pdf-to-html-deck deploy                   # 写入 GitHub Actions workflow,推上去即上线
+npx pdf-to-html-deck init                      # scaffold the project (work/ + shell + spec)
+npx pdf-to-html-deck extract book.pdf          # split the PDF into one text file per chapter
+# ...write work/fragments/*.html slide fragments (yourself, or let your AI assistant — see below)
+npx pdf-to-html-deck build --theme chalkboard  # assemble into a single index.html (5 themes)
+npx pdf-to-html-deck deploy                    # write the GitHub Actions workflow, push to go live
 ```
 
-> 需要本机有 Python 3(提取阶段用 `pypdf`;缺了 CLI 会提示,`--setup` 可自动安装)。构建阶段仅标准库。
+> Requires a local Python 3 (extraction uses `pypdf`; the CLI detects it and `--setup` auto-installs into a dedicated venv). The build step is stdlib-only.
 
-## 它解决什么问题
+## What you get
 
-把书变成"可放映的讲义":每章提炼成 1-3 页幻灯片(卡片 + 手绘 SVG 图 + 表格 + 关键数字),
-书中有真实代码的章节可以做成「代码讲解页」(代码 + ①②③ 逐点讲解)。输出是**一个
-index.html**——所有 CSS/JS/内容内联,双击即开,离线可用,打印导出 PDF 每页一纸。
+Each chapter becomes 1–3 slides — cards, hand-drawn SVG diagrams, tables, and the key numbers from the book. Chapters with real code listings become **code-walkthrough slides** (annotated code + numbered explanation cards + a "run it" strip). The output is **one `index.html`**: all CSS/JS/content inlined, opens offline with a double-click, prints to one page per slide.
 
-- 1280×720 幻灯片画布,← →/空格翻页、`T` 目录、`F` 全屏、hash 直达、进度轨
-- 每页自带"航线"签名动效(描线 + 节点点亮),遵循 `prefers-reduced-motion`
-- 组装器校验片段契约(唯一 id、必备元数据、禁外部资源)
+- 1280×720 slide canvas — ← → / Space navigation, `T` table of contents, `F` fullscreen, deep-linkable URLs, progress rail
+- Signature per-page "route line" animation (stroke draw + node light-up), respects `prefers-reduced-motion`
+- The assembler validates every fragment (unique ids, required metadata, no external resources)
 
-## 主题预设(换肤不动内容)
+## Themes — same content, one flag
 
-| 主题 | 风格 | `--theme` |
+| Night Chart *(default)* | Apple Light | Chalkboard |
 |---|---|---|
-| 夜航图(默认) | 深靛蓝 + 航图网格 + 宋体 + 三色信标 | *(不带参数)* |
-| 苹果白 | 白底、SF 系字体、克制蓝、深色代码块 | `apple-light` |
-| Vox 剪纸 | 米纸底、墨色硬边框、错位实体阴影 | `papercut-vox` |
-| 黑板粉笔 | 墨绿板面、粉笔白、虚线手绘框 | `chalkboard` |
-| 深蓝像素 | 深夜蓝、霓虹青/街机黄、等宽、扫描线 | `pixel-blue` |
+| <img src="https://raw.githubusercontent.com/RCliang/pdf-to-html-deck/main/docs/themes/night-chart.png" width="360"> | <img src="https://raw.githubusercontent.com/RCliang/pdf-to-html-deck/main/docs/themes/apple-light.png" width="360"> | <img src="https://raw.githubusercontent.com/RCliang/pdf-to-html-deck/main/docs/themes/chalkboard.png" width="360"> |
+| deep-indigo nautical chart, serif display | clean white, SF-style type | green blackboard, chalk white |
+| *(no flag)* | `--theme apple-light` | `--theme chalkboard` |
 
-主题以 CSS 覆盖层注入(`build.py --theme NAME`),自定义皮肤只需把 `NAME.css` 放进
-`work/themes/`。主题切换有记忆:写入 `work/theme.txt`,重复构建幂等;`--theme none` 解除。
-
-## 命令
-
-| 命令 | 作用 |
+| Papercut Vox | Pixel Blue |
 |---|---|
-| `init [--dir .] [--title "书名"]` | 建骨架:`work/`(shell/SPEC/order.txt/fragments/)` |
-| `extract <pdf> [--dir .] [--setup]` | 调 `scripts/extract_pdf.py` 拆章;产物 `work/text/chNN.txt` + `work/manifest.json` |
-| `build [--dir .] [--out index.html] [--theme NAME\|none]` | 调 `scripts/build.py` 组装单文件 |
-| `theme list` | 列出内置 + `work/themes/` 自定义主题 |
-| `deploy [--dir .]` | 写入 `.github/workflows/deploy.yml` 并打印上线三步 |
-| `install-skill [--dest ~/.agents/skills/pdf-to-html-deck]` | 把 ZCode 技能(SKILL.md + references + 脚本/模板/主题)装进技能目录 |
+| <img src="https://raw.githubusercontent.com/RCliang/pdf-to-html-deck/main/docs/themes/papercut-vox.png" width="360"> | <img src="https://raw.githubusercontent.com/RCliang/pdf-to-html-deck/main/docs/themes/pixel-blue.png" width="360"> |
+| cut-paper collage, hard ink borders | deep-blue neon, monospace, scanlines |
+| `--theme papercut-vox` | `--theme pixel-blue` |
 
-## 七阶段工作流(完整方法论文档在 `skill/`)
+Themes are injected as a CSS override layer — content and layout contract stay untouched. Drop a `NAME.css` into `work/themes/` for your own. The chosen theme is remembered (`work/theme.txt`), so rebuilds are idempotent; `--theme none` resets.
 
-1. **extract** — 书签拆章 + manifest(规划页数与分工)
-2. **init/搭壳** — 复制 shell 模板、替换标题占位符、选主题
-3. **规范 + 金标准** — `work/SPEC.md` 是片段契约;先亲手写一张高质量范本页
-4. **并行产出片段** — 每页一个 `<section>`,概念页/代码页/扉页/封面
-5. **build** — 按 `work/order.txt` 组装 + 校验
-6. **QA** — DOM 溢出审计 + 逐页截图 + 视觉验收(详见 skill/references/qa.md)
+## CLI reference
+
+| Command | What it does |
+|---|---|
+| `init [--dir .] [--title "…"]` | Scaffold `work/` (shell, SPEC, order.txt, fragments/) |
+| `extract <pdf> [--dir .] [--setup]` | Split by bookmarks → `work/text/chNN.txt` + `work/manifest.json` |
+| `build [--dir .] [--out …] [--theme NAME\|none]` | Assemble the single-file deck |
+| `theme list` | List built-in + local themes |
+| `deploy [--dir .]` | Write `.github/workflows/deploy.yml` + print the go-live steps |
+| `install-skill [--dest …]` | Install the ZCode agent skill (SKILL.md + references + scripts/templates/themes) |
+
+## The 7-stage workflow (full methodology ships in `skill/`)
+
+1. **extract** — bookmark-aware chapter split + manifest for planning
+2. **shell** — copy the template, pick a theme
+3. **spec + golden sample** — `work/SPEC.md` is the fragment contract; write one high-quality exemplar slide first
+4. **author fragments** — one `<section>` per slide: concept pages, code pages, part dividers, cover
+5. **build** — assemble in `work/order.txt` order + validate
+6. **QA** — DOM overflow audits, per-page screenshots, visual review (`skill/references/qa.md`)
 7. **deploy** — GitHub Pages
 
-配合 AI 编码助手(ZCode 等)效率最高:`install-skill` 后,助手会按 SKILL.md 的完整管线
-(含子代理并行撰写片段的调度策略与 QA 清单)替你把书做成站点。
-
-## 作为 ZCode 技能使用
+This is where AI coding assistants shine: after `install-skill`, an assistant (ZCode etc.) follows the full SKILL.md pipeline — including parallel fragment authoring and the QA checklist — and builds the deck for you.
 
 ```bash
 npx pdf-to-html-deck install-skill
+# then tell your assistant: "turn this PDF into a chaptered presentation site"
 ```
 
-之后对助手说"把这本 PDF 做成章节演示网页",技能即被触发。
-
-## 开发与测试
+## Development & testing
 
 ```bash
 git clone https://github.com/RCliang/pdf-to-html-deck && cd pdf-to-html-deck
-bash test/smoke.sh     # 生成 fixture → init/extract/build/主题切换 全链路冒烟
-npm pack --dry-run     # 查看发布包内容
+bash test/smoke.sh     # fixture → init/extract/build/theme-switch end-to-end smoke
+npm pack --dry-run     # inspect the published contents
 ```
 
-CI:push 跑冒烟;打 `v*` 标签自动 `npm publish`(需在仓库 Secrets 配 `NPM_TOKEN`)。
+CI runs the smoke test on every push; pushing a `v*` tag auto-publishes to npm (requires an `NPM_TOKEN` secret).
 
 ## License
 
