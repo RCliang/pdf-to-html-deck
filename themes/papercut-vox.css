@@ -1,0 +1,47 @@
+/* ============================================================
+   主题:Vox 剪纸风(papercut-vox)
+   米纸底 · 墨线硬边框 · 实体错位阴影(纸片层叠)· 海报式粗黑标题
+   ============================================================ */
+:root{
+  --ink0:#171208; --ink1:#FFFBF0; --ink2:#FFF6E3;
+  --paper:#171208; --muted:#4A3F2C; --faint:#7A6C52;
+  --verm:#D92800; --amber:#B96A00; --cyan:#0E7C86;
+  --line:rgba(23,18,8,.85);
+  --verm-bg:rgba(217,40,0,.09); --amber-bg:rgba(232,155,0,.12); --cyan-bg:rgba(14,124,134,.09);
+  --grid:transparent;
+  --serif:"PingFang SC","Hiragino Sans GB","Noto Sans SC","Microsoft YaHei",sans-serif;
+  --sans:"PingFang SC","Hiragino Sans GB","Noto Sans SC","Microsoft YaHei",sans-serif;
+  --mono:"Courier New","Menlo",monospace;
+}
+body{background:#F1E7D0}
+body::before{background:radial-gradient(rgba(23,18,8,.05) 1px, transparent 1.2px);background-size:22px 22px}
+body::after{background:none}
+.stage{background:#F1E7D0;border:2px solid #171208;border-radius:0;box-shadow:8px 8px 0 rgba(23,18,8,.9)}
+.k-card,.fig,.k-code,.k-callout,.k-tag,ul.k-flow li{border-radius:0}
+.k-card{background:#FFFBF0;border:2px solid #171208;box-shadow:4px 4px 0 rgba(23,18,8,.85)}
+.k-card::before,.k-card::after{border-color:#171208;opacity:1}
+.fig{background:#FFF3D6;border:2px solid #171208}
+.k-code{background:#171208;border:2px solid #171208;box-shadow:4px 4px 0 rgba(23,18,8,.85)}
+.k-code pre{color:#F5E9CB}
+.k-code pre .c{color:#A08D6A}
+.k-code pre .k{color:#FF8A5C}
+.k-code pre .s{color:#FFC53D}
+.k-code pre .f{color:#5BC8D4}
+ul.k-flow li{background:#FFFBF0;border:2px solid #171208}
+.k-table td{border-bottom:2px dotted rgba(23,18,8,.30)}
+.k-callout{background:#FFE9CE;border:2px solid #171208;border-left:6px solid var(--verm);box-shadow:3px 3px 0 rgba(23,18,8,.85)}
+.k-callout.g{background:#DDEFEA;border-left-color:var(--cyan)}
+.k-compare .vs{border:2px solid #171208;border-radius:0;color:var(--verm)}
+.k-tag{border:1.5px solid #171208;background:#FFFBF0}
+.div-num{-webkit-text-stroke-color:rgba(23,18,8,.14)}
+.div-item{border-bottom:2px dotted rgba(23,18,8,.35)}
+#toc{background:rgba(241,231,208,.97)}
+#toc .ti{background:#FFFBF0;border:2px solid #171208;border-radius:0}
+#toc .ti:hover{border-color:var(--verm)}
+#hud .btn{background:#FFFBF0;border:2px solid #171208;border-radius:0}
+#rail{background:rgba(23,18,8,.10)}
+.rn .halo{stroke:rgba(217,40,0,.28)}
+
+/* --- 浅底修正:SVG 结构块 --- */
+.fig [fill="var(--ink0)"]{fill:#FFF6E3}
+.fig [stroke^="rgba(78,201"]{stroke:rgba(14,124,134,.55)}

@@ -1,0 +1,41 @@
+{
+  "name": "pdf-to-html-deck",
+  "version": "0.1.0",
+  "description": "Turn a PDF book into a chaptered, diagram-rich, animated single-file HTML slide deck — with theme presets and GitHub Pages deploy",
+  "keywords": [
+    "pdf",
+    "slides",
+    "presentation",
+    "html",
+    "github-pages",
+    "knowledge-base",
+    "agent-skill"
+  ],
+  "license": "MIT",
+  "bin": {
+    "pdf-to-html-deck": "bin/cli.js"
+  },
+  "files": [
+    "bin/",
+    "scripts/",
+    "assets/",
+    "themes/",
+    "skill/",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "test": "bash test/smoke.sh"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RCliang/pdf-to-html-deck.git"
+  },
+  "bugs": {
+    "url": "https://github.com/RCliang/pdf-to-html-deck/issues"
+  },
+  "homepage": "https://rcliang.github.io/agent-book/"
+}

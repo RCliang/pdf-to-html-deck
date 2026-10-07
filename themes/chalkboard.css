@@ -1,0 +1,44 @@
+/* ============================================================
+   主题:黑板粉笔(chalkboard)
+   墨绿板面 · 粉笔白字 · 虚线手绘框 · 粉笔三色(黄/粉红/淡蓝)
+   注:中文无系统粉笔字体,自动回退苹方;拉丁字符走 Chalkboard SE
+   ============================================================ */
+:root{
+  --ink0:#101812; --ink1:#1C2B23; --ink2:#22332A;
+  --paper:#F4EFE0; --muted:#C4CBB8; --faint:#8D9A85;
+  --verm:#F0968C; --amber:#F5D879; --cyan:#9CD8E8;
+  --line:rgba(244,239,224,.22);
+  --verm-bg:rgba(240,150,140,.10); --amber-bg:rgba(245,216,121,.10); --cyan-bg:rgba(156,216,232,.10);
+  --grid:rgba(244,239,224,.045);
+  --serif:"Chalkboard SE","Marker Felt","Comic Sans MS","PingFang SC","Microsoft YaHei",cursive;
+  --sans:"Chalkboard SE","Marker Felt","PingFang SC","Microsoft YaHei",cursive;
+  --mono:"Menlo","Courier New",monospace;
+}
+body{background:#1B2820}
+body::before{background:
+  radial-gradient(1000px 640px at 50% 30%, rgba(244,239,224,.05), transparent 62%),
+  radial-gradient(rgba(244,239,224,.05) 1px, transparent 1.4px);
+  background-size:auto,180px 180px}
+body::after{background:radial-gradient(140% 120% at 50% 45%, transparent 55%, rgba(8,14,11,.5))}
+.stage{background:rgba(27,40,32,.5);border-color:rgba(244,239,224,.16)}
+.k-card{background:rgba(28,43,35,.55);border:1.5px dashed rgba(244,239,224,.30)}
+.k-card::before,.k-card::after{border-color:rgba(244,239,224,.45)}
+.fig{background:rgba(20,31,25,.45);border:1.5px dashed rgba(244,239,224,.25)}
+.k-code{background:#101812;border:1.5px solid rgba(244,239,224,.28)}
+.k-code pre{color:#E9E4D2}
+ul.k-flow li{background:rgba(34,51,42,.7);border:1.5px dashed rgba(244,239,224,.30)}
+.k-table td{border-bottom:1px dashed rgba(244,239,224,.16)}
+.k-callout{background:var(--verm-bg);border:1.5px dashed rgba(240,150,140,.55);border-left:4px solid var(--verm)}
+.k-callout.g{background:var(--cyan-bg);border-color:rgba(156,216,232,.5);border-left-color:var(--cyan)}
+.k-compare .vs{border:1.5px dashed rgba(240,150,140,.6)}
+.k-tag{border:1px dashed rgba(244,239,224,.35)}
+.k-tag.cy{border-color:rgba(156,216,232,.5)}
+.k-tag.am{border-color:rgba(245,216,121,.5)}
+.k-tag.vm{border-color:rgba(240,150,140,.5)}
+.div-num{-webkit-text-stroke-color:rgba(244,239,224,.14)}
+.div-item{border-bottom-color:rgba(244,239,224,.22)}
+#toc{background:rgba(16,24,19,.95)}
+#toc .ti{background:rgba(34,51,42,.85);border:1px dashed rgba(244,239,224,.3)}
+#hud .btn{background:rgba(28,43,35,.85);border-color:rgba(244,239,224,.3)}
+#rail{background:rgba(244,239,224,.08)}
+.rn .halo{stroke:rgba(245,216,121,.30)}

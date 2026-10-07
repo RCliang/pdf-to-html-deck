@@ -1,0 +1,47 @@
+/* ============================================================
+   主题:深蓝像素风(pixel-blue)
+   深夜蓝底 · 霓虹青/街机黄/品红 · 等宽字体 · 直角边框 + 扫描线
+   ============================================================ */
+:root{
+  --ink0:#050A1A; --ink1:#0A1430; --ink2:#101D42;
+  --paper:#D6E7FF; --muted:#A9C4F2; --faint:#7E93C4;
+  --verm:#FF4D6D; --amber:#FFD23F; --cyan:#22D3EE;
+  --line:rgba(110,160,255,.22);
+  --verm-bg:rgba(255,77,109,.10); --amber-bg:rgba(255,210,63,.08); --cyan-bg:rgba(34,211,238,.08);
+  --grid:rgba(90,140,255,.07);
+  --serif:"Courier New","PingFang SC","Microsoft YaHei",monospace;
+  --sans:"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  --mono:"Courier New","Menlo",monospace;
+}
+body{background:var(--ink0)}
+body::before{background:
+  radial-gradient(1100px 700px at 72% 12%, rgba(34,211,238,.06), transparent 60%),
+  linear-gradient(var(--grid) 1px, transparent 1px),
+  linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size:auto,32px 32px,32px 32px}
+body::after{background:
+  repeating-linear-gradient(0deg, rgba(0,0,0,.14) 0 1px, transparent 1px 4px),
+  radial-gradient(140% 120% at 50% 45%, transparent 55%, rgba(0,4,12,.55))}
+.stage{background:rgba(6,12,32,.6);border:2px solid rgba(110,160,255,.35);border-radius:0}
+.k-card,.fig,.k-code,.k-callout,.k-compare .vs,.k-tag,ul.k-flow li{border-radius:0}
+.k-card{background:rgba(16,29,66,.8);border:1px solid rgba(110,160,255,.35);box-shadow:inset 0 0 0 1px rgba(5,10,26,.6)}
+.k-card::before,.k-card::after{border-color:var(--cyan);opacity:1}
+.fig{background:rgba(10,20,48,.55);border:1px solid rgba(110,160,255,.35)}
+.k-code{background:#04081A;border:1px solid rgba(110,160,255,.4)}
+.k-code pre{color:#C9D9F5}
+ul.k-flow li{background:var(--ink2);border:1px solid rgba(110,160,255,.35)}
+.k-table th{letter-spacing:.18em}
+.k-table td{border-bottom-color:rgba(110,160,255,.10)}
+.k-callout{background:var(--verm-bg);border:1px solid rgba(255,77,109,.5);border-left:4px solid var(--verm)}
+.k-callout.g{background:var(--cyan-bg);border-color:rgba(34,211,238,.45);border-left-color:var(--cyan)}
+.k-compare .vs{border-color:rgba(255,77,109,.55)}
+.k-tag.cy{border-color:rgba(34,211,238,.45)}
+.k-tag.am{border-color:rgba(255,210,63,.45)}
+.k-tag.vm{border-color:rgba(255,77,109,.45)}
+.div-num{-webkit-text-stroke-color:rgba(110,160,255,.20)}
+.div-item{border-bottom-color:rgba(110,160,255,.18)}
+#toc{background:rgba(4,8,22,.95)}
+#toc .ti{background:var(--ink2);border:1px solid var(--line)}
+#hud .btn{background:rgba(10,20,48,.85)}
+#rail{background:rgba(110,160,255,.12)}
+.rn .halo{stroke:rgba(255,210,63,.35)}
