@@ -18,13 +18,28 @@ Turn a PDF book, handbook, or long report into a **chapter-by-chapter, diagram-r
 
 ## Quick start
 
+Two paths drive the same pipeline — they differ only in who writes the slide fragments:
+
+### Path A — Manual: drive the CLI yourself
+
 ```bash
 npx pdf-to-html-deck init                      # scaffold the project (work/ + shell + spec)
 npx pdf-to-html-deck extract book.pdf          # split the PDF into one text file per chapter
-# ...write work/fragments/*.html slide fragments (yourself, or let your AI assistant — see below)
+# ...hand-write work/fragments/*.html — one <section> per slide
 npx pdf-to-html-deck build --theme chalkboard  # assemble into a single index.html (5 themes)
 npx pdf-to-html-deck deploy                    # write the GitHub Actions workflow, push to go live
 ```
+
+### Path B — AI assistant: install the skill, delegate the authoring
+
+```bash
+npx pdf-to-html-deck install-skill             # install the agent skill for your AI assistant
+# then tell your assistant: "turn this PDF into a chaptered presentation site"
+```
+
+Your AI coding assistant (ZCode etc.) then runs the whole 7-stage workflow below — including authoring every fragment and the QA pass.
+
+Both paths share the same commands and the same `work/` layout: `install-skill` only copies skill files into your assistant's skill directory (default `~/.agents/skills/pdf-to-html-deck`, override with `--dest`) and changes nothing about the CLI.
 
 > Requires a local Python 3 (extraction uses `pypdf`; the CLI detects it and `--setup` auto-installs into a dedicated venv). The build step is stdlib-only.
 
@@ -73,12 +88,7 @@ Themes are injected as a CSS override layer — content and layout contract stay
 6. **QA** — DOM overflow audits, per-page screenshots, visual review (`skill/references/qa.md`)
 7. **deploy** — GitHub Pages
 
-This is where AI coding assistants shine: after `install-skill`, an assistant (ZCode etc.) follows the full SKILL.md pipeline — including parallel fragment authoring and the QA checklist — and builds the deck for you.
-
-```bash
-npx pdf-to-html-deck install-skill
-# then tell your assistant: "turn this PDF into a chaptered presentation site"
-```
+This is where AI coding assistants shine: with the skill installed (Quick start → Path B), an assistant (ZCode etc.) follows this full pipeline — including parallel fragment authoring and the QA checklist — and builds the deck for you.
 
 ## Development & testing
 

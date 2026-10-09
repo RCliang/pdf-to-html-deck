@@ -18,13 +18,28 @@
 
 ## 快速开始
 
+两条路径,同一条管线——区别只在「谁来写幻灯片片段」:
+
+### 路径 A —— 手动:自己驱动 CLI
+
 ```bash
 npx pdf-to-html-deck init                     # 在当前目录搭起项目骨架(work/ + 外壳 + 规范)
 npx pdf-to-html-deck extract book.pdf         # 按书签把 PDF 拆成「每章一个文本文件」
-# ……用你(或你的 AI 助手)按 work/SPEC.md 写 work/fragments/*.html 页面片段
+# ……亲手按 work/SPEC.md 写 work/fragments/*.html 页面片段(每页一个 <section>)
 npx pdf-to-html-deck build --theme chalkboard # 组装成单文件 index.html(五套主题可选)
 npx pdf-to-html-deck deploy                   # 写入 GitHub Actions workflow,推上去即上线
 ```
+
+### 路径 B —— AI 助手:安装技能,交给助手撰写
+
+```bash
+npx pdf-to-html-deck install-skill            # 为你的 AI 助手安装 agent 技能
+# 然后对助手说:"把这本 PDF 做成章节演示网页"
+```
+
+之后 AI 编码助手(ZCode 等)会替你跑完整套下方七阶段工作流——含撰写全部片段与 QA 验收。
+
+两条路径共用同一套命令与同一个 `work/` 目录结构:`install-skill` 只是把技能文件拷进助手的技能目录(默认 `~/.agents/skills/pdf-to-html-deck`,可用 `--dest` 另指定),不会改动 CLI 本身。
 
 > 需要本机有 Python 3(提取阶段用 `pypdf`;缺了 CLI 会提示,`--setup` 可自动装入独立 venv)。构建阶段仅标准库。
 
@@ -76,13 +91,8 @@ index.html**——所有 CSS/JS/内容内联,双击即开,离线可用,打印导
 6. **QA** — DOM 溢出审计 + 逐页截图 + 视觉验收(详见 skill/references/qa.md)
 7. **deploy** — GitHub Pages
 
-配合 AI 编码助手(ZCode 等)效率最高:`install-skill` 后,助手会按 SKILL.md 的完整管线
-(含子代理并行撰写片段的调度策略与 QA 清单)替你把书做成站点。
-
-```bash
-npx pdf-to-html-deck install-skill
-# 然后对助手说:"把这本 PDF 做成章节演示网页"
-```
+配合 AI 编码助手(ZCode 等)效率最高:装好技能(见快速开始 → 路径 B),助手会按 SKILL.md
+的完整管线(含子代理并行撰写片段的调度策略与 QA 清单)替你把书做成站点。
 
 ## 开发与测试
 
