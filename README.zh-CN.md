@@ -32,14 +32,20 @@ npx pdf-to-html-deck deploy                   # 写入 GitHub Actions workflow,�
 
 ### 路径 B —— AI 助手:安装技能,交给助手撰写
 
+两个安装器二选一,装的是同一个自包含技能(SKILL.md + references + 脚本/模板/主题),都进助手的技能目录:
+
 ```bash
-npx pdf-to-html-deck install-skill            # 为你的 AI 助手安装 agent 技能
+# 方式一 —— 通用 skills CLI(https://skills.sh):
+npx skills@latest add RCliang/pdf-to-html-deck -g -a codex --copy
 # 然后对助手说:"把这本 PDF 做成章节演示网页"
+
+# 方式二 —— 自带安装器:
+npx pdf-to-html-deck install-skill
 ```
 
 之后 AI 编码助手(ZCode 等)会替你跑完整套下方七阶段工作流——含撰写全部片段与 QA 验收。
 
-两条路径共用同一套命令与同一个 `work/` 目录结构:`install-skill` 只是把技能文件拷进助手的技能目录(默认 `~/.agents/skills/pdf-to-html-deck`,可用 `--dest` 另指定),不会改动 CLI 本身。
+两条路径共用同一套命令与同一个 `work/` 目录结构——都只是拷贝技能文件,不会改动 CLI 本身。skills CLI 的 80 来种 agent 里没有 ZCode,所以 `-a` 任选一个装进共享目录 `~/.agents/skills/` 的 agent 即可(`codex`/`cursor`/`amp`/`opencode` 均可)——ZCode 同样读取该目录。`-g` 装到用户全局;Windows 上建议 `--copy`(符号链接需要额外权限);日后 `npx skills update` 升级。自带 `install-skill` 默认装到 `~/.agents/skills/pdf-to-html-deck`(可用 `--dest` 另指定)。
 
 > 需要本机有 Python 3(提取阶段用 `pypdf`;缺了 CLI 会提示,`--setup` 可自动装入独立 venv)。构建阶段仅标准库。
 
@@ -75,20 +81,20 @@ index.html**——所有 CSS/JS/内容内联,双击即开,离线可用,打印导
 | 命令 | 作用 |
 |---|---|
 | `init [--dir .] [--title "书名"]` | 建骨架:`work/`(shell/SPEC/order.txt/fragments/) |
-| `extract <pdf> [--dir .] [--setup]` | 调 `scripts/extract_pdf.py` 拆章;产物 `work/text/chNN.txt` + `work/manifest.json` |
-| `build [--dir .] [--out index.html] [--theme NAME\|none]` | 调 `scripts/build.py` 组装单文件 |
+| `extract <pdf> [--dir .] [--setup]` | 调 `skills/pdf-to-html-deck/scripts/extract_pdf.py` 拆章;产物 `work/text/chNN.txt` + `work/manifest.json` |
+| `build [--dir .] [--out index.html] [--theme NAME\|none]` | 调 `skills/pdf-to-html-deck/scripts/build.py` 组装单文件 |
 | `theme list` | 列出内置 + `work/themes/` 自定义主题 |
 | `deploy [--dir .]` | 写入 `.github/workflows/deploy.yml` 并打印上线三步 |
 | `install-skill [--dest ~/.agents/skills/pdf-to-html-deck]` | 把 ZCode 技能(SKILL.md + references + 脚本/模板/主题)装进技能目录 |
 
-## 七阶段工作流(完整方法论文档在 `skill/`)
+## 七阶段工作流(完整方法论文档在 `skills/pdf-to-html-deck/`)
 
 1. **extract** — 书签拆章 + manifest(规划页数与分工)
 2. **init/搭壳** — 复制 shell 模板、替换标题占位符、选主题
 3. **规范 + 金标准** — `work/SPEC.md` 是片段契约;先亲手写一张高质量范本页
 4. **并行产出片段** — 每页一个 `<section>`,概念页/代码页/扉页/封面
 5. **build** — 按 `work/order.txt` 组装 + 校验
-6. **QA** — DOM 溢出审计 + 逐页截图 + 视觉验收(详见 skill/references/qa.md)
+6. **QA** — DOM 溢出审计 + 逐页截图 + 视觉验收(详见 skills/pdf-to-html-deck/references/qa.md)
 7. **deploy** — GitHub Pages
 
 配合 AI 编码助手(ZCode 等)效率最高:装好技能(见快速开始 → 路径 B),助手会按 SKILL.md

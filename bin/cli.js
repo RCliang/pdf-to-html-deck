@@ -5,7 +5,9 @@
  *
  * 子命令:init / extract / build / theme / deploy / install-skill
  * 设计约束:零 npm 依赖;只写目标项目目录,无网络行为,无破坏性操作。
- * Python 侧脚本(scripts/*.py)由本 CLI 探测解释器后代跑:
+ * 技能资产(SKILL.md + references + scripts + assets + themes)自包含在
+ * skills/pdf-to-html-deck/ 下,本 CLI 与 skills.sh CLI(npx skills add)共用同一布局。
+ * Python 侧脚本(skills/pdf-to-html-deck/scripts/*.py)由本 CLI 探测解释器后代跑:
  *   - extract 需要 pypdf(探测可用解释器;--setup 可自动 pip 安装)
  *   - build 仅标准库
  */
@@ -15,11 +17,11 @@ const path = require('path');
 const { spawnSync } = require('child_process');
 
 const PKG = path.resolve(__dirname, '..');
-const EXTRACT = path.join(PKG, 'scripts', 'extract_pdf.py');
-const BUILD = path.join(PKG, 'scripts', 'build.py');
-const SHELL_TPL = path.join(PKG, 'assets', 'shell.template.html');
-const THEMES_DIR = path.join(PKG, 'themes');
-const SKILL_DIR = path.join(PKG, 'skill');
+const SKILL_DIR = path.join(PKG, 'skills', 'pdf-to-html-deck');
+const EXTRACT = path.join(SKILL_DIR, 'scripts', 'extract_pdf.py');
+const BUILD = path.join(SKILL_DIR, 'scripts', 'build.py');
+const SHELL_TPL = path.join(SKILL_DIR, 'assets', 'shell.template.html');
+const THEMES_DIR = path.join(SKILL_DIR, 'themes');
 
 const DEPLOY_YML = `name: Deploy deck to Pages
 on:
@@ -227,10 +229,7 @@ function cmdDeploy(opt) {
 function cmdInstallSkill(opt) {
   const dest = path.resolve(opt.dest || path.join(os.homedir(), '.agents', 'skills', 'pdf-to-html-deck'));
   if (fs.existsSync(dest)) log(`· 目标已存在,将覆盖更新: ${dest}`);
-  copyDir(SKILL_DIR, dest);                       // SKILL.md + references/
-  copyDir(path.join(PKG, 'scripts'), path.join(dest, 'scripts'));
-  copyDir(path.join(PKG, 'assets'), path.join(dest, 'assets'));
-  copyDir(THEMES_DIR, path.join(dest, 'themes'));
+  copyDir(SKILL_DIR, dest);                       // SKILL.md + references/ + scripts/ + assets/ + themes/ 自包含
   log(`✓ 技能已安装: ${dest}`);
   log(`· 重启会话后对 AI 助手说"把这本 PDF 做成章节演示网页"即可触发`);
 }

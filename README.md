@@ -32,14 +32,20 @@ npx pdf-to-html-deck deploy                    # write the GitHub Actions workfl
 
 ### Path B — AI assistant: install the skill, delegate the authoring
 
+Two interchangeable installers put the same self-contained skill (`SKILL.md` + references + scripts/templates/themes) into your assistant's skill directory:
+
 ```bash
-npx pdf-to-html-deck install-skill             # install the agent skill for your AI assistant
+# Option 1 — the universal skills CLI (https://skills.sh):
+npx skills@latest add RCliang/pdf-to-html-deck -g -a codex --copy
 # then tell your assistant: "turn this PDF into a chaptered presentation site"
+
+# Option 2 — the built-in installer:
+npx pdf-to-html-deck install-skill
 ```
 
 Your AI coding assistant (ZCode etc.) then runs the whole 7-stage workflow below — including authoring every fragment and the QA pass.
 
-Both paths share the same commands and the same `work/` layout: `install-skill` only copies skill files into your assistant's skill directory (default `~/.agents/skills/pdf-to-html-deck`, override with `--dest`) and changes nothing about the CLI.
+Both paths share the same commands and the same `work/` layout — they only copy skill files, and change nothing about the CLI. The skills CLI doesn't list ZCode among its ~80 agents, so pass any agent that installs to the shared `~/.agents/skills/` directory (`codex`, `cursor`, `amp`, `opencode`…) — ZCode reads that directory too. Use `-g` for user-global, `--copy` on Windows (symlinks need extra permissions); `npx skills update` refreshes later. The built-in `install-skill` defaults to `~/.agents/skills/pdf-to-html-deck` (override with `--dest`).
 
 > Requires a local Python 3 (extraction uses `pypdf`; the CLI detects it and `--setup` auto-installs into a dedicated venv). The build step is stdlib-only.
 
@@ -78,14 +84,14 @@ Themes are injected as a CSS override layer — content and layout contract stay
 | `deploy [--dir .]` | Write `.github/workflows/deploy.yml` + print the go-live steps |
 | `install-skill [--dest …]` | Install the ZCode agent skill (SKILL.md + references + scripts/templates/themes) |
 
-## The 7-stage workflow (full methodology ships in `skill/`)
+## The 7-stage workflow (full methodology ships in `skills/pdf-to-html-deck/`)
 
 1. **extract** — bookmark-aware chapter split + manifest for planning
 2. **shell** — copy the template, pick a theme
 3. **spec + golden sample** — `work/SPEC.md` is the fragment contract; write one high-quality exemplar slide first
 4. **author fragments** — one `<section>` per slide: concept pages, code pages, part dividers, cover
 5. **build** — assemble in `work/order.txt` order + validate
-6. **QA** — DOM overflow audits, per-page screenshots, visual review (`skill/references/qa.md`)
+6. **QA** — DOM overflow audits, per-page screenshots, visual review (`skills/pdf-to-html-deck/references/qa.md`)
 7. **deploy** — GitHub Pages
 
 This is where AI coding assistants shine: with the skill installed (Quick start → Path B), an assistant (ZCode etc.) follows this full pipeline — including parallel fragment authoring and the QA checklist — and builds the deck for you.

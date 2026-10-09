@@ -17,10 +17,7 @@
   },
   "files": [
     "bin/",
-    "scripts/",
-    "assets/",
-    "themes/",
-    "skill/",
+    "skills/",
     "README.md",
     "README.zh-CN.md",
     "LICENSE"
