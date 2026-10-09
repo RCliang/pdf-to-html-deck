@@ -1,6 +1,6 @@
 {
   "name": "pdf-to-html-deck",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Turn a PDF book into a chaptered, diagram-rich, animated single-file HTML slide deck — with theme presets and GitHub Pages deploy",
   "keywords": [
     "pdf",
